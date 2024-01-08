@@ -4,7 +4,6 @@ title: My New Post
 date: '2024-01-08 20:38:29 +0800'
 categories: [research]
 tags: [pcr]
-img_path: _posts/
 ---
 
 # 鲁棒点云配准问题
