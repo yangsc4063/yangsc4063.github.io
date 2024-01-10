@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rubust Pointcloud Registration Problem
+title: 鲁棒点云配准问题
 date: '2024-01-08 20:38:29 +0800'
 categories: [Research]
 tags: [pointcloud registraion]
@@ -12,17 +12,17 @@ math: true
 > 本文是对论文《TEASER: Fast and Certifiable Point Cloud Registration》中所提出的**鲁棒点云配准问题**的梳理。
 
 在鲁棒点云配准问题中，给定两个 3D 点云 $\boldsymbol P=\{\boldsymbol p_i\}_{i=1}^N$ 和 $\boldsymbol Q=\{\boldsymbol q_i\}_{i=1}^N$，其中 $\boldsymbol p_i,\boldsymbol q_i\in\R^3$。考虑基于对应的模型，即假设给定的对应 $(\boldsymbol p_i,\boldsymbol q_i),i=1,...,N$服从以下模型：
-$$
-\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+\boldsymbol o_i+\boldsymbol \varepsilon_i
-$$
-其中 $s^\circ>0$，$\boldsymbol R^\circ\in SO(3)$ 和 $\boldsymbol t^\circ\in \R^3$ 是未知的（待计算的）尺度、旋转和平移真值，$\boldsymbol \varepsilon_i$ 是测量噪声的模型。如果点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是内点（正常数据，可被模型描述的数据），$\boldsymbol o_i$ 是零向量，如果点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是离群点（异常数据，无法适应模型的数据），$\boldsymbol o_i$ 是任意向量。换句话说，如果第 $i$ 个点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是内点对应，则 $\boldsymbol q_i$ 对应 $\boldsymbol p_i$（加噪声 $\boldsymbol \varepsilon_i$）的一个 3D 变换，而如果 $(\boldsymbol p_i,\boldsymbol q_i)$ 是离群点对应，则 $\boldsymbol q_i$ 只是一个任意的向量。
+
+$$\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+\boldsymbol o_i+\boldsymbol \varepsilon_i$$
+
+其中 $s^\circ>0$，$\boldsymbol R^\circ\in SO(3)$ 和 $\boldsymbol t^\circ\in R^3$ 是未知的（待计算的）尺度、旋转和平移真值，$\boldsymbol \varepsilon_i$ 是测量噪声的模型。如果点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是内点（正常数据，可被模型描述的数据），$\boldsymbol o_i$ 是零向量，如果点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是离群点（异常数据，无法适应模型的数据），$\boldsymbol o_i$ 是任意向量。换句话说，如果第 $i$ 个点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是内点对应，则 $\boldsymbol q_i$ 对应 $\boldsymbol p_i$（加噪声 $\boldsymbol \varepsilon_i$）的一个 3D 变换，而如果 $(\boldsymbol p_i,\boldsymbol q_i)$ 是离群点对应，则 $\boldsymbol q_i$ 只是一个任意的向量。
 
 ## 无离群点的点云配准
 
 当 $\boldsymbol \varepsilon_i$ 是具有各向同性协方差 $\sigma_i^2\boldsymbol I_3$ 的零均值高斯噪声，且所有对应都是正确的（即 $\boldsymbol o_i=0,\forall i$）时，则$(s^\circ,\boldsymbol R^\circ,\boldsymbol t^\circ)$的最大似然估计可以通过求解如下非线性最小二乘问题来计算：
-$$
-\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in \R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2\label{2}
-$$
+
+$$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in \R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2$$
+
 虽然式 $\eqref{2}$ 是一个非凸优化问题，但由于集合 $SO(3)$ 的非凸性，其最优解可以通过解耦尺度、旋转和平移估计，使用 SVD 分解以闭式计算（即可求解析解）。
 
 在实际应用中，由于点匹配不正确，很大一部分对应是离群点。尽管闭式解形式优美，但它们对异常值并不鲁棒，即使单独一个"坏"的异常值就可能对估计的正确性造成负面影响。因此，我们提出了一种能够容忍极端数量离群对应的截断最小二乘配准公式。
