@@ -4,6 +4,7 @@ title: Rubust Pointcloud Registration Problem
 date: '2024-01-08 20:38:29 +0800'
 categories: [Research]
 tags: [pointcloud registraion]
+math: true
 ---
 
 # 鲁棒点云配准问题
