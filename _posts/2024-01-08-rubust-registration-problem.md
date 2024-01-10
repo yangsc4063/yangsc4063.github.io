@@ -1,7 +1,6 @@
 ---
-layout: post
 title: 鲁棒点云配准问题
-date: '2024-01-08 20:38:29 +0800'
+date: 2024-01-08 20:38:29 +0800
 categories: [Research]
 tags: [pointcloud registraion]
 math: true
@@ -61,9 +60,9 @@ $$P\bigg(\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\leq\gamma^2\bigg)=p
 此外，截断最小二乘估计与<u>一致性优化</u>（Consensus Maximization，MC）相关，MC 是计算机视觉中一种流行的鲁棒估计方法。MC 寻求一个能够最大化内点数量的估计，而 TLS 同时计算内点的最小二乘估计。总的来说，这两种方法一般不能保证产生相同的内点选择，因为 TLS 还会对具有较大误差的内点进行惩罚。
 
 一致性最大化寻求一个能够最大化内点数量的估计，等价地，最小化离群点的数量的估计：
-$$
-\min_{\mathcal{O}\subseteq\mathcal{M},\boldsymbol x\in\mathcal{X}}|\mathcal{O}|,\ s.t.\|r_i(\boldsymbol x_i)\|^2\leq\bar{c}^2\ \forall i\in\mathcal{M}\setminus\mathcal{O}\label{6}
-$$
+
+$$\min_{\mathcal{O}\subseteq\mathcal{M},\boldsymbol x\in\mathcal{X}}|\mathcal{O}|,\ s.t.\|r_i(\boldsymbol x_i)\|^2\leq\bar{c}^2\ \forall i\in\mathcal{M}\setminus\mathcal{O}$$
+
 其中，$\boldsymbol x$ 是我们要估计（可能属于某个区域 $\mathcal X$）的变量，$\mathcal M$ 是可用的测量值集合，$r_i (·)$ 是给定的残差函数，$\bar c$ 是内点的最大容许误差，$|·|$表示集合的基数（集合元素的个数）。式 $\eqref{6}$ 寻找最小的离群点集（$\mathcal O$），使得对某个 $\boldsymbol x$，其它所有的测量值（即，内点 $\mathcal{M}\setminus\mathcal{O}$）都有小于 $\bar c$ 的残差。虽然一致性最大化问题在一般情况下是难以解决的，但通过自适应投票法，在标量情况下，它可以在多项式时间内求解。
 
 一般来说，MC 和 TLS 不会返回相同的解，因为 TLS 可能更倾向于丢弃导致估计产生较大偏差的测量值，如下面的简单例子所示。
@@ -94,7 +93,7 @@ $$\min_{\boldsymbol x\in\mathcal{X}}\sum_{i\in\mathcal{M}}\min\big(\|r_i(\boldsy
 
 内点是在最优解处残差小于 $\bar{c}$ 的测量值。我们记 $f_{TLS}(\mathcal I)$ 为给定的一致集 $\mathcal I$ 的 TLS 代价的值。
 
-记测量集的大小为 $N$，即 $N=|\mathcal M|$。如果 $\mathcal O\_{MC}$ 是 $\eqref{6}$ 的最优解，我们定义 $N^{MC}\_{out}=|\mathcal O\_{MC}|$ 。则通过 MC 找到的内点个数为 $N^{MC}\_{in}=|\mathcal M\setminus\mathcal O|=N-N^{MC}\_{out}$。此外，内点的残差平方和为：
+记测量集的大小为 $N$，即 $N=\vert\mathcal M\vert$。如果 $\mathcal O\_{MC}$ 是 $\eqref{6}$ 的最优解，我们定义 $N^{MC}\_{out}=\vert\mathcal O\_{MC}\vert$ 。则通过 MC 找到的内点个数为 $N^{MC}\_{in}=\vert\mathcal M\setminus\mathcal O\vert=N-N^{MC}\_{out}$。此外，内点的残差平方和为：
 
 $$r_{in}^{MC}=\sum_{i\in\mathcal M\setminus\mathcal O_{MC}}\|r_i(\boldsymbol x)\|^2,$$
 
@@ -104,7 +103,7 @@ $$f_{TLS}(\mathcal I')<N^{MC}_{out}\bar{c}^2+r_{in}^{MC}$$
 
 这是因为我们假设与 $\mathcal I_{MC}$ 对应的解（代价为 $N^{MC}\_{out}\bar{c}^2+r\_{in}^{MC}$）是次优的。
 
-现在，如果我们令 $N\_{in}'=|\mathcal I'|$，并定义 $N'\_{out}=N'-N'\_{in}$，又因为 $\mathcal I\_{MC}$ 之外的任何一致集的大小都小于 $N^{MC}\_{in}-r^{MC}\_{in}/\bar{c}^2$ 意味着：
+现在，如果我们令 $N\_{in}'=\lvert\mathcal I'\rvert$，并定义 $N'\_{out}=N'-N'\_{in}$，又因为 $\mathcal I\_{MC}$ 之外的任何一致集的大小都小于 $N^{MC}\_{in}-r^{MC}\_{in}/\bar{c}^2$ 意味着：
 
 $$\begin{aligned}
 &N_{in}'<N^{MC}_{in}-r^{MC}_{in}/\bar{c}^2\\
