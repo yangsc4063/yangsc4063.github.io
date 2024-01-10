@@ -11,7 +11,7 @@ math: true
 
 > 本文是对论文《TEASER: Fast and Certifiable Point Cloud Registration》中所提出的**鲁棒点云配准问题**的梳理。
 
-在鲁棒点云配准问题中，给定两个 3D 点云 $\boldsymbol P=\{\boldsymbol p_i\}_{i=1}^N$ 和 $\boldsymbol Q=\{\boldsymbol q_i\}_{i=1}^N$，其中 $\boldsymbol p_i,\boldsymbol q_i\in\R^3$。考虑基于对应的模型，即假设给定的对应 $(\boldsymbol p_i,\boldsymbol q_i),i=1,...,N$服从以下模型：
+在鲁棒点云配准问题中，给定两个 3D 点云 $\boldsymbol P={\boldsymbol p_i}_{i=1}^N$ 和 $\boldsymbol Q={\boldsymbol q_i}_{i=1}^N$，其中 $\boldsymbol p_i,\boldsymbol q_i\in R^3$。考虑基于对应的模型，即假设给定的对应 $(\boldsymbol p_i,\boldsymbol q_i),i=1,...,N$服从以下模型：
 
 $$\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+\boldsymbol o_i+\boldsymbol \varepsilon_i$$
 
@@ -21,7 +21,7 @@ $$\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+
 
 当 $\boldsymbol \varepsilon_i$ 是具有各向同性协方差 $\sigma_i^2\boldsymbol I_3$ 的零均值高斯噪声，且所有对应都是正确的（即 $\boldsymbol o_i=0,\forall i$）时，则$(s^\circ,\boldsymbol R^\circ,\boldsymbol t^\circ)$的最大似然估计可以通过求解如下非线性最小二乘问题来计算：
 
-$$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in \R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2$$
+$$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2$$
 
 虽然式 $\eqref{2}$ 是一个非凸优化问题，但由于集合 $SO(3)$ 的非凸性，其最优解可以通过解耦尺度、旋转和平移估计，使用 SVD 分解以闭式计算（即可求解析解）。
 
@@ -32,9 +32,9 @@ $$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in \R^3}\sum_{i=1}^N\frac{1}{\s
 从高斯噪声模型出发，假设噪声是未知但有界的。形式上，我们假设内点噪声 $\boldsymbol \varepsilon_i$ 满足 $‖\boldsymbol \varepsilon_i‖\leq\beta_i$，其中 $\beta_i$ 是一个给定的边界。
 
 然后我们采用以下截断最小二乘（Truncated Least Squares，TLS）配准公式：
-$$
-\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in \R^3}\sum_{i=1}^N\min\bigg(\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2,\bar{c}^2\bigg)\label{3}
-$$
+
+$$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\min\bigg(\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2,\bar{c}^2\bigg)$$
+
 该方法计算具有小残差的测量的最小二乘解 $\big(\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2\leq\bar{c}^2\big)$，同时丢弃具有大残差的测量（当 $\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2>\bar{c}^2$ 时，第 $i$ 个求和项变为常数，不影响优化）。
 
 实际上，噪声边界 $\beta_i$ 在算法实现中相当容易设置，可以理解为 “3-sigma” 噪声边界，或者是我们所期望的内点中的最大误差。
