@@ -63,7 +63,7 @@ $$P\bigg(\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\leq\gamma^2\bigg)=p
 
 $$\min_{\mathcal{O}\subseteq\mathcal{M},\boldsymbol x\in\mathcal{X}}|\mathcal{O}|,\ s.t.\|r_i(\boldsymbol x_i)\|^2\leq\bar{c}^2\ \forall i\in\mathcal{M}\setminus\mathcal{O}$$
 
-其中，$\boldsymbol x$ 是我们要估计（可能属于某个区域 $\mathcal X$）的变量，$\mathcal M$ 是可用的测量值集合，$r_i (·)$ 是给定的残差函数，$\bar c$ 是内点的最大容许误差，$|·|$表示集合的基数（集合元素的个数）。式 $\eqref{6}$ 寻找最小的离群点集（$\mathcal O$），使得对某个 $\boldsymbol x$，其它所有的测量值（即，内点 $\mathcal{M}\setminus\mathcal{O}$）都有小于 $\bar c$ 的残差。虽然一致性最大化问题在一般情况下是难以解决的，但通过自适应投票法，在标量情况下，它可以在多项式时间内求解。
+其中，$\boldsymbol x$ 是我们要估计（可能属于某个区域 $\mathcal X$）的变量，$\mathcal M$ 是可用的测量值集合，$r_i (·)$ 是给定的残差函数，$\bar c$ 是内点的最大容许误差，$\vert·\vert$表示集合的基数（集合元素的个数）。式 $\eqref{6}$ 寻找最小的离群点集（$\mathcal O$），使得对某个 $\boldsymbol x$，其它所有的测量值（即，内点 $\mathcal{M}\setminus\mathcal{O}$）都有小于 $\bar c$ 的残差。虽然一致性最大化问题在一般情况下是难以解决的，但通过自适应投票法，在标量情况下，它可以在多项式时间内求解。
 
 一般来说，MC 和 TLS 不会返回相同的解，因为 TLS 可能更倾向于丢弃导致估计产生较大偏差的测量值，如下面的简单例子所示。
 
