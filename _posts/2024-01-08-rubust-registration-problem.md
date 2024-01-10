@@ -54,7 +54,6 @@ $$P\bigg(\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\leq\gamma^2\bigg)=p
 其中 $γ^2$ 是具有三个自由度的 $χ^2$ 分布的分位数，其左尾概率等于 $p$（例如，对于 $p = 0.97$，$γ=3$）。因此，可以简单地将噪声边界 $β_i$ 设置为 $β_i= σ_i$，令 $\bar c= γ$。参数 $γ$ 随着 $p$ 的增大而单调增加，因此，将 $p$ 设定为接近 $1$ 可使得公式 $\eqref{3}$ 更容易接受具有较大残差的测量，而较小的 $p$ 会使式 $\eqref{3}$ 更具选择性。
 
 > 虽然我们假设对于内点我们有最大误差的边界 $\beta_i$，但我们不对离群点模型做任何假设，因为这在实践中往往是未知的。
->
 > {: .prompt-tip }
 
 ### 截断最小二乘估计与一致性优化
@@ -85,7 +84,7 @@ $$
 
 <u>虽然 MC 和 TLS 一般不会选择相同的内点集，但在内点集基数较大的情况下，我们期望 TLS 和 MC 产生类似的解决方案。</u>
 
-**TLS 和 MC 等价的必要条件**：假设 MC 所求的最大一致集的大小为 $N^{MC}_{in}$，内点的残差平方和为 $r^{MC}_{in}$。如果次大一致性集合的规模小于 $N^{MC}_{in}-r^{MC}_{in}/\bar{c}^2$，则 TLS 也会选择该最大一致集作为内点。
+**TLS 和 MC 等价的必要条件**：假设 MC 所求的最大一致集的大小为 $N^{MC}\_{in}$，内点的残差平方和为 $r^{MC}\_{in}$。如果次大一致性集合的规模小于 $N^{MC}\_{in}-r^{MC}\_{in}/\bar{c}^2$，则 TLS 也会选择该最大一致集作为内点。
 
 证明：
 
@@ -95,7 +94,7 @@ $$\min_{\boldsymbol x\in\mathcal{X}}\sum_{i\in\mathcal{M}}\min\big(\|r_i(\boldsy
 
 内点是在最优解处残差小于 $\bar{c}$ 的测量值。我们记 $f_{TLS}(\mathcal I)$ 为给定的一致集 $\mathcal I$ 的 TLS 代价的值。
 
-记测量集的大小为 $N$，即 $N=|\mathcal M|$。如果 $\mathcal O_{MC}$ 是 $\eqref{6}$ 的最优解，我们定义 $N^{MC}_{out}=|\mathcal O_{MC}|$ 。则通过 MC 找到的内点个数为 $N^{MC}_{in}=|\mathcal M\setminus\mathcal O|=N-N^{MC}_{out}$。此外，内点的残差平方和为：
+记测量集的大小为 $N$，即 $N=|\mathcal M|$。如果 $\mathcal O\_{MC}$ 是 $\eqref{6}$ 的最优解，我们定义 $N^{MC}\_{out}=|\mathcal O\_{MC}|$ 。则通过 MC 找到的内点个数为 $N^{MC}\_{in}=|\mathcal M\setminus\mathcal O|=N-N^{MC}\_{out}$。此外，内点的残差平方和为：
 
 $$r_{in}^{MC}=\sum_{i\in\mathcal M\setminus\mathcal O_{MC}}\|r_i(\boldsymbol x)\|^2,$$
 
@@ -103,9 +102,9 @@ $$r_{in}^{MC}=\sum_{i\in\mathcal M\setminus\mathcal O_{MC}}\|r_i(\boldsymbol x)\
 
 $$f_{TLS}(\mathcal I')<N^{MC}_{out}\bar{c}^2+r_{in}^{MC}$$
 
-这是因为我们假设与 $\mathcal I_{MC}$ 对应的解（代价为 $N^{MC}_{out}\bar{c}^2+r_{in}^{MC}$）是次优的。
+这是因为我们假设与 $\mathcal I_{MC}$ 对应的解（代价为 $N^{MC}\_{out}\bar{c}^2+r\_{in}^{MC}$）是次优的。
 
-现在，如果我们令 $N_{in}'=|\mathcal I'|$，并定义 $N'_{out}=N'-N'_{in}$，又因为 $\mathcal I_{MC}$ 之外的任何一致集的大小都小于 $N^{MC}_{in}-r^{MC}_{in}/\bar{c}^2$ 意味着：
+现在，如果我们令 $N\_{in}'=|\mathcal I'|$，并定义 $N'\_{out}=N'-N'\_{in}$，又因为 $\mathcal I\_{MC}$ 之外的任何一致集的大小都小于 $N^{MC}\_{in}-r^{MC}\_{in}/\bar{c}^2$ 意味着：
 
 $$\begin{aligned}
 &N_{in}'<N^{MC}_{in}-r^{MC}_{in}/\bar{c}^2\\
