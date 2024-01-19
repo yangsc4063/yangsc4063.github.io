@@ -12,7 +12,7 @@ math: true
 
 在鲁棒点云配准问题中，给定两个 3D 点云 $\boldsymbol P=\lbrace\boldsymbol p_i\rbrace\_{i=1}^N$ 和 $\boldsymbol Q=\lbrace\boldsymbol q_i\rbrace\_{i=1}^N$，其中 $\boldsymbol p_i,\boldsymbol q_i\in R^3$。考虑基于对应的模型，即假设给定的对应 $(\boldsymbol p_i,\boldsymbol q_i),i=1,...,N$服从以下模型：
 
-$$\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+\boldsymbol o_i+\boldsymbol \varepsilon_i$$
+$$\begin{equation}\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+\boldsymbol o_i+\boldsymbol \varepsilon_i\end{equation}$$
 
 其中 $s^\circ>0$，$\boldsymbol R^\circ\in SO(3)$ 和 $\boldsymbol t^\circ\in R^3$ 是未知的（待计算的）尺度、旋转和平移真值，$\boldsymbol \varepsilon_i$ 是测量噪声的模型。如果点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是内点（正常数据，可被模型描述的数据），$\boldsymbol o_i$ 是零向量，如果点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是离群点（异常数据，无法适应模型的数据），$\boldsymbol o_i$ 是任意向量。换句话说，如果第 $i$ 个点对 $(\boldsymbol p_i,\boldsymbol q_i)$ 是内点对应，则 $\boldsymbol q_i$ 对应 $\boldsymbol p_i$（加噪声 $\boldsymbol \varepsilon_i$）的一个 3D 变换，而如果 $(\boldsymbol p_i,\boldsymbol q_i)$ 是离群点对应，则 $\boldsymbol q_i$ 只是一个任意的向量。
 
@@ -20,7 +20,7 @@ $$\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+
 
 当 $\boldsymbol \varepsilon_i$ 是具有各向同性协方差 $\sigma_i^2\boldsymbol I_3$ 的零均值高斯噪声，且所有对应都是正确的（即 $\boldsymbol o_i=0,\forall i$）时，则$(s^\circ,\boldsymbol R^\circ,\boldsymbol t^\circ)$的最大似然估计可以通过求解如下非线性最小二乘问题来计算：
 
-$$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2$$
+$$\begin{equation}\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2\label{2}\end{equation}$$
 
 虽然式 $\eqref{2}$ 是一个非凸优化问题，但由于集合 $SO(3)$ 的非凸性，其最优解可以通过解耦尺度、旋转和平移估计，使用 SVD 分解以闭式计算（即可求解析解）。
 
@@ -32,7 +32,7 @@ $$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\frac{1}{\si
 
 然后我们采用以下截断最小二乘（Truncated Least Squares，TLS）配准公式：
 
-$$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\min\bigg(\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2,\bar{c}^2\bigg)$$
+$$\begin{equation}\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\min\bigg(\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2,\bar{c}^2\bigg)\end{equation}$$
 
 该方法计算具有小残差的测量的最小二乘解 $\big(\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2\leq\bar{c}^2\big)$，同时丢弃具有大残差的测量（当 $\frac{1}{\beta_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2>\bar{c}^2$ 时，第 $i$ 个求和项变为常数，不影响优化）。
 
@@ -44,13 +44,13 @@ $$\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\min\bigg(\f
 
 如果我们假设内点服从模型 $\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+\boldsymbol o_i+\boldsymbol \varepsilon_i$，且满足 $\boldsymbol\varepsilon_i\sim N(\boldsymbol0_3,\sigma_i^2\boldsymbol I_3)$，$\boldsymbol o_i=\boldsymbol 0$，则有
 
-$$\frac{1}{\sigma_i^2}\|\boldsymbol q_i-\boldsymbol R\boldsymbol p_i\|^2=\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\sim\chi^2(3),$$
+$$\begin{equation}\frac{1}{\sigma_i^2}\|\boldsymbol q_i-\boldsymbol R\boldsymbol p_i\|^2=\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\sim\chi^2(3),\end{equation}$$
 
 其中，$\chi^2(3)$ 为具有三个自由度的卡方分布。因此，在期望的概率 $p$ 下，内点的加权误差 $\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2$ 满足：
 
-$$P\bigg(\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\leq\gamma^2\bigg)=p,$$
+$$\begin{equation}P\bigg(\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\leq\gamma^2\bigg)=p,\label{5}\end{equation}$$
 
-其中 $γ^2$ 是具有三个自由度的 $χ^2$ 分布的分位数，其左尾概率等于 $p$（例如，对于 $p = 0.97$，$γ=3$）。因此，可以简单地将噪声边界 $β_i$ 设置为 $β_i= σ_i$，令 $\bar c= γ$。参数 $γ$ 随着 $p$ 的增大而单调增加，因此，将 $p$ 设定为接近 $1$ 可使得公式 $\eqref{3}$ 更容易接受具有较大残差的测量，而较小的 $p$ 会使式 $\eqref{3}$ 更具选择性。
+其中 $γ^2$ 是具有三个自由度的 $χ^2$ 分布的分位数，其左尾概率等于 $p$（例如，对于 $p = 0.97$，$γ=3$）。因此，可以简单地将噪声边界 $β_i$ 设置为 $β_i= σ_i$，令 $\bar c= γ$。参数 $γ$ 随着 $p$ 的增大而单调增加，因此，将 $p$ 设定为接近 $1$ 可使得公式 $\eqref{5}$ 更容易接受具有较大残差的测量，而较小的 $p$ 会使式 $\eqref{5}$ 更具选择性。
 
 > 虽然我们假设对于内点我们有最大误差的边界 $\beta_i$，但我们不对离群点模型做任何假设，因为这在实践中往往是未知的。
 > {: .prompt-tip }
@@ -61,7 +61,7 @@ $$P\bigg(\frac{1}{\sigma_i^2}\|\boldsymbol \varepsilon_i\|^2\leq\gamma^2\bigg)=p
 
 一致性最大化寻求一个能够最大化内点数量的估计，等价地，最小化离群点的数量的估计：
 
-$$\min_{\mathcal{O}\subseteq\mathcal{M},\boldsymbol x\in\mathcal{X}}|\mathcal{O}|,\ s.t.\|r_i(\boldsymbol x_i)\|^2\leq\bar{c}^2\ \forall i\in\mathcal{M}\setminus\mathcal{O}$$
+$$\begin{equation}\min_{\mathcal{O}\subseteq\mathcal{M},\boldsymbol x\in\mathcal{X}}|\mathcal{O}|,\ s.t.\|r_i(\boldsymbol x_i)\|^2\leq\bar{c}^2\ \forall i\in\mathcal{M}\setminus\mathcal{O}\label{6}\end{equation}$$
 
 其中，$\boldsymbol x$ 是我们要估计（可能属于某个区域 $\mathcal X$）的变量，$\mathcal M$ 是可用的测量值集合，$r_i (·)$ 是给定的残差函数，$\bar c$ 是内点的最大容许误差，$\vert·\vert$表示集合的基数（集合元素的个数）。式 $\eqref{6}$ 寻找最小的离群点集（$\mathcal O$），使得对某个 $\boldsymbol x$，其它所有的测量值（即，内点 $\mathcal{M}\setminus\mathcal{O}$）都有小于 $\bar c$ 的残差。虽然一致性最大化问题在一般情况下是难以解决的，但通过自适应投票法，在标量情况下，它可以在多项式时间内求解。
 
@@ -89,31 +89,31 @@ $$\min_{\mathcal{O}\subseteq\mathcal{M},\boldsymbol x\in\mathcal{X}}|\mathcal{O}
 
 对 TLS 公式，
 
-$$\min_{\boldsymbol x\in\mathcal{X}}\sum_{i\in\mathcal{M}}\min\big(\|r_i(\boldsymbol x)\|^2,\bar{c}^2\big),$$
+$$\begin{equation}\min_{\boldsymbol x\in\mathcal{X}}\sum_{i\in\mathcal{M}}\min\big(\|r_i(\boldsymbol x)\|^2,\bar{c}^2\big),\end{equation}$$
 
 内点是在最优解处残差小于 $\bar{c}$ 的测量值。我们记 $f_{TLS}(\mathcal I)$ 为给定的一致集 $\mathcal I$ 的 TLS 代价的值。
 
 记测量集的大小为 $N$，即 $N=\vert\mathcal M\vert$。如果 $\mathcal O\_{MC}$ 是 $\eqref{6}$ 的最优解，我们定义 $N^{MC}\_{out}=\vert\mathcal O\_{MC}\vert$ 。则通过 MC 找到的内点个数为 $N^{MC}\_{in}=\vert\mathcal M\setminus\mathcal O\vert=N-N^{MC}\_{out}$。此外，内点的残差平方和为：
 
-$$r_{in}^{MC}=\sum_{i\in\mathcal M\setminus\mathcal O_{MC}}\|r_i(\boldsymbol x)\|^2,$$
+$$\begin{equation}r_{in}^{MC}=\sum_{i\in\mathcal M\setminus\mathcal O_{MC}}\|r_i(\boldsymbol x)\|^2,\end{equation}$$
 
 反证，假设最大一致集 $\mathcal I_{MC}$ 导致次优的 TLS 解。那么，存在另一个 TLS 解，其一致集为 $\mathcal I'$，满足：
 
-$$f_{TLS}(\mathcal I')<N^{MC}_{out}\bar{c}^2+r_{in}^{MC}$$
+$$\begin{equation}f_{TLS}(\mathcal I')<N^{MC}_{out}\bar{c}^2+r_{in}^{MC}\label{9}\end{equation}$$
 
 这是因为我们假设与 $\mathcal I_{MC}$ 对应的解（代价为 $N^{MC}\_{out}\bar{c}^2+r\_{in}^{MC}$）是次优的。
 
 现在，如果我们令 $N\_{in}'=\lvert\mathcal I'\rvert$，并定义 $N'\_{out}=N'-N'\_{in}$，又因为 $\mathcal I\_{MC}$ 之外的任何一致集的大小都小于 $N^{MC}\_{in}-r^{MC}\_{in}/\bar{c}^2$ 意味着：
 
-$$\begin{aligned}
+$$\begin{equation}\begin{aligned}
 &N_{in}'<N^{MC}_{in}-r^{MC}_{in}/\bar{c}^2\\
 &\Leftrightarrow N-N'_{out}<N-N_{out}^{MC}-r^{MC}_{in}/\bar{c}^2\\
 &\Leftrightarrow N'_{out}>N_{out}^{MC}+r^{MC}_{in}/\bar{c}^2
-\end{aligned}$$
+\end{aligned}\label{10}\end{equation}$$
 
-利用 $\eqref{12}$ 并注意到内点的残差是非负的（它是一个平方和）：
+利用 $\eqref{10}$ 并注意到内点的残差是非负的（它是一个平方和）：
 
-$$f_{TLS}(\mathcal I')>N’_{out}\bar{c}^2>N^{MC}_{out}\bar{c}^2+r_{in}^{MC}$$
+$$\begin{equation}f_{TLS}(\mathcal I')>N’_{out}\bar{c}^2>N^{MC}_{out}\bar{c}^2+r_{in}^{MC}\label{11}\end{equation}$$
 
-因此，式 $\eqref{11}$ 和式 $\eqref{13}$ 不能同时满足。证毕。
+因此，式 $\eqref{9}$ 和式 $\eqref{11}$ 不能同时满足。证毕。
 
