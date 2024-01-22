@@ -1,8 +1,9 @@
 ---
 title: 鲁棒点云配准问题
-date: 2024-01-08 20:38:29 +0800
+date: 2024-01-19 15:29:46 +0800
 categories: [Research]
 tags: [pointcloud registraion]
+pin: true
 math: true
 ---
 
@@ -20,7 +21,7 @@ $$\begin{equation}\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\bol
 
 当 $\boldsymbol \varepsilon_i$ 是具有各向同性协方差 $\sigma_i^2\boldsymbol I_3$ 的零均值高斯噪声，且所有对应都是正确的（即 $\boldsymbol o_i=0,\forall i$）时，则$(s^\circ,\boldsymbol R^\circ,\boldsymbol t^\circ)$的最大似然估计可以通过求解如下非线性最小二乘问题来计算：
 
-$$\begin{equation}\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i+\boldsymbol t\|^2\tag{2}\end{equation}$$
+$$\begin{equation}\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=1}^N\frac{1}{\sigma_i^2}\|\boldsymbol q_i-s\boldsymbol R\boldsymbol p_i-\boldsymbol t\|^2\tag{2}\end{equation}$$
 
 虽然式 $(2)$ 是一个非凸优化问题，但由于集合 $SO(3)$ 的非凸性，其最优解可以通过解耦尺度、旋转和平移估计，使用 SVD 分解以闭式计算（即可求解析解）。
 
