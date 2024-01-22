@@ -62,6 +62,9 @@ Moon
 
 ## Prompts
 
+> 一个 `tip` 类型prompts的例子
+> {: .prompt-tip }
+
 > An example showing the `tip` type prompt.
 > {: .prompt-tip }
 
