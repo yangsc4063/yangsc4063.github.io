@@ -3,7 +3,6 @@ title: Text and Typography
 date: 2019-08-08 11:33:00 +0800
 categories: [Tutorial]
 tags: [typography]
-pin: true
 math: true
 mermaid: true
 ---
@@ -64,7 +63,7 @@ Moon
 ## Prompts
 
 > An example showing the `tip` type prompt.
-{: .prompt-tip }
+> {: .prompt-tip }
 
 > An example showing the `info` type prompt.
 {: .prompt-info }

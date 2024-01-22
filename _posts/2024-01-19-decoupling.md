@@ -48,11 +48,11 @@ $$\begin{equation}\|s^\circ\boldsymbol R^\circ\boldsymbol p_{ij}\|-\delta_{ij}\l
 
 $$\begin{equation}\|\boldsymbol q_{ij}\|=\|s^\circ\boldsymbol R^\circ\boldsymbol p_{ij}\|+\widetilde{o}_{ij}+\widetilde{\varepsilon}_{ij}\tag{6}\end{equation}$$
 
-其中 $\widetilde{\varepsilon}_{ij}\leq\delta_{ij}$，如果第 i 和第 j 个点都是内点，$\widetilde{o}_{ij}=0$，否则为任意标量。范数是旋转不变的，并且 $s>0$，将等式 $(6)$ 两边除以 $\|\boldsymbol p_{ij}\|$，我们得到新的测量 $s_{ij}=\|\boldsymbol q_{ij}\|/\|\boldsymbol p_{ij}\|$。
+其中 $\widetilde{\varepsilon}\_{ij}\leq\delta\_{ij}$，如果第 i 和第 j 个点都是内点，$\widetilde{o}_{ij}=0$，否则为任意标量。范数是旋转不变的，并且 $s>0$，将等式 $(6)$ 两边除以 $\|\boldsymbol p\_{ij}\|$，我们得到新的测量 $s_{ij}=\|\boldsymbol q\_{ij}\|/\|\boldsymbol p\_{ij}\|$。
 
 $$\begin{equation}s_{ij}=s+o_{ij}^s+\varepsilon_{ij}^s\tag{7}\end{equation}$$
 
-其中，$\varepsilon_{ij}^s=\widetilde{\varepsilon}_{ij}/\|\boldsymbol p_{ij}\|$，$o_{ij}^s=\widetilde{o}_{ij}/\|\boldsymbol p_{ij}\|$。由于 $\|\widetilde\varepsilon_{ij}\|\leq\delta_{ij}$，很容易看出 $\|\varepsilon_{ij}^s\|\leq\delta_{ij}/\|\boldsymbol p_{ij}\|$。我们定义 $α_{ij}=δ_{ij}/\|\boldsymbol p_{ij}\|$。
+其中，$\varepsilon\_{ij}^s=\widetilde{\varepsilon}\_{ij}/\|\boldsymbol p\_{ij}\|$，$o\_{ij}^s=\widetilde{o}\_{ij}/\|\boldsymbol p\_{ij}\|$。由于 $\|\widetilde\varepsilon\_{ij}\|\leq\delta\_{ij}$，很容易看出 $\|\varepsilon\_{ij}^s\|\leq\delta\_{ij}/\|\boldsymbol p\_{ij}\|$。我们定义 $α\_{ij}=δ\_{ij}/\|\boldsymbol p\_{ij}\|$。
 
 式 $(7)$ 描述了一种平移和旋转不变测量（TRIM），其模型仅是未知尺度 $s$ 的函数。
 
