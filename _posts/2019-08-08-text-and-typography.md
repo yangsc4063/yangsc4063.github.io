@@ -63,7 +63,7 @@ Moon
 ## Prompts
 
 > An example showing the `tip` type prompt.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 > An example showing the `info` type prompt.
 {: .prompt-info }
