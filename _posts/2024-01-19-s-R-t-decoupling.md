@@ -1,14 +1,14 @@
 ---
-title: 缩放、旋转和平移解耦估计
+title: 缩放、旋转和平移解耦的点云配准
 date: 2024-01-08 20:38:29 +0800
 categories: [Research]
-tags: [non-convex optimization]
+tags: [pointcloud registraion]
 math: true
 ---
 
-# 缩放、旋转和平移解耦估计
+# 缩放、旋转和平移解耦的点云配准
 
-> 本文是对论文《TEASER: Fast and Certifiable Point Cloud Registration》中所提出的**缩放、旋转和平移解耦估计**的梳理。
+> 本文是对论文《TEASER: Fast and Certifiable Point Cloud Registration》中所提出的**缩放、旋转和平移解耦的点云配准**的梳理。
 
 在鲁棒点云配准问题中，给定两个 3D 点云 $\boldsymbol P=\lbrace\boldsymbol p_i\rbrace\_{i=1}^N$ 和 $\boldsymbol Q=\lbrace\boldsymbol q_i\rbrace\_{i=1}^N$，其中 $\boldsymbol p_i,\boldsymbol q_i\in R^3$。考虑基于对应的模型，即假设给定的对应 $(\boldsymbol p_i,\boldsymbol q_i),i=1,...,N$服从以下模型：
 
@@ -25,6 +25,7 @@ $$\begin{equation}\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\bol
 $$\begin{equation}\boldsymbol q_j-\boldsymbol q_i=s^\circ\boldsymbol R^\circ(\boldsymbol p_j-\boldsymbol p_i)+(\boldsymbol o_j-\boldsymbol o_i)+(\boldsymbol \varepsilon_j-\boldsymbol \varepsilon_i)\tag{2}\end{equation}$$
 
 ![image-20240121164943879](assets/img/20240119/image-20240121164943879.png)
+_由Bunny数据集中的完整图生成的TIMs_
 
 其中，平移 $\boldsymbol t$ 在减法中被消除。因此，我们可以通过计算 $\boldsymbol p_{ij}=\boldsymbol p_j-\boldsymbol p_i$ 和 $\boldsymbol q_{ij}=\boldsymbol q_j-\boldsymbol q_i$ 来获得平移不变度量（TIM），而 TIM 满足以下模型：
 
@@ -32,7 +33,7 @@ $$\begin{equation}\boldsymbol q_{ij}=s^\circ\boldsymbol R^\circ\boldsymbol p_{ij
 
 其中，$\boldsymbol o_{ij}$ 在第 i 和第 j 个点都是<u>内点</u>时为零（或在其他情况下是任意的），而 $\boldsymbol \varepsilon_{ij}$ 是测量噪声。很容易看出，如果 $\|\boldsymbol\varepsilon_i\|\leq\beta_i,\|\boldsymbol\varepsilon_j\|\leq\beta_j$，则 $\|\boldsymbol\varepsilon_{ij}\|\leq\beta_i+\beta_j=\delta_{ij}$。
 
-TIMs 在式 $(3)$ 中的优势在于其模型只取决于两个未知数 $s$ 和 $\boldsymbol R$。TIMs 的数量上限为 $N(N-1)/2$，其中计算了所有点对之间的相对测量。
+TIMs 在式 $(3)$ 中的优势在于其模型<u>只取决于两个未知数 $s$ 和 $\boldsymbol R$</u>。TIMs 的数量上限为 $N(N-1)/2$，其中计算了所有点对之间的相对测量。
 
 ### 平移和旋转不变度量（TRIMs）
 
@@ -54,7 +55,7 @@ $$\begin{equation}s_{ij}=s+o_{ij}^s+\varepsilon_{ij}^s\tag{7}\end{equation}$$
 
 其中，$\varepsilon\_{ij}^s=\widetilde{\varepsilon}\_{ij}/\|\boldsymbol p\_{ij}\|$，$o\_{ij}^s=\widetilde{o}\_{ij}/\|\boldsymbol p\_{ij}\|$。由于 $\|\widetilde\varepsilon\_{ij}\|\leq\delta\_{ij}$，很容易看出 $\|\varepsilon\_{ij}^s\|\leq\delta\_{ij}/\|\boldsymbol p\_{ij}\|$。我们定义 $α\_{ij}=δ\_{ij}/\|\boldsymbol p\_{ij}\|$。
 
-式 $(7)$ 描述了一种平移和旋转不变测量（TRIM），其模型仅是未知尺度 $s$ 的函数。
+式 $(7)$ 描述了一种平移和旋转不变测量（TRIM），<u>其模型仅是未知尺度 $s$ 的函数</u>。
 
 ### 小结
 
@@ -70,7 +71,7 @@ $$\begin{equation}s_{ij}=s+o_{ij}^s+\varepsilon_{ij}^s\tag{7}\end{equation}$$
 
 ### 缩放估计
 
-TRIM 模型描述了未知尺度 $s$ 的线性标量度量 $s_{ij}$，它受到有界噪声 $\|\varepsilon_{ij}^s\|\leqα_{ij}=\delta_{ij}/\|\boldsymbol p_{ij}\|$ 的影响，其中可能包括潜在的异常值（当 $o_{ij}^s\neq0$ 时）。给定度量 $s_{ij}$ 和边界 $\alpha_{ij}$，使用截断最小二乘法（TLS）来估计缩放：
+TRIM 模型描述了未知尺度 $s$ 的线性标量度量 $s_{ij}$，它受到有界噪声 $\|\varepsilon_{ij}^s\|\leqα_{ij}=\delta_{ij}/\|\boldsymbol p_{ij}\|$ 的影响，其中可能包括潜在的异常值（当 $o_{ij}^s\neq0$ 时）。给定度量 $s_{ij}$ 和边界 $\alpha_{ij}$，使用截断最小二乘（TLS）来估计缩放：
 
 $$\begin{equation}\hat s=\arg\min_s\sum_{k=1}^K\min\bigg(\frac{(s-s_k)^2}{\alpha_k^2},\bar{c}^2\bigg)\tag{8}\end{equation}$$
 
@@ -94,3 +95,5 @@ $$\begin{equation}\hat t_j=\arg\min_{t_j}\sum_{k=1}^K\min\bigg(\frac{(t_j-[\bold
 
 其中 $j=1,2,3$，其中 $[·]_j$ 表示向量的第 $j$ 个条目。由于 $\boldsymbol q_i-\hat s\hat{\boldsymbol R}\boldsymbol p_i$ 在此阶段是一个已知的向量，很容易看出 $(11)$ 是一个标量 TLS 问题。因此，其求解方式类似式 $(8)$。
 
+> 如何求解 $(9),(10),(11)$ 目标函数高度非凸的且计算复杂度 $O(2^N)$ 优化问题，是解决鲁棒点云配准问题的关键。
+{: .prompt-tip }
