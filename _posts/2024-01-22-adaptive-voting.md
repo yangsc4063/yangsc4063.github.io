@@ -35,7 +35,7 @@ $$\begin{equation}g(\boldsymbol x)=\sum_{i=1}^N\min\big(g_i(\boldsymbol x),0\big
 
 其中，$g_i:R^d\rightarrow R$ 定义为 $g_i(x)=f_i(x)-\bar λ_i$，也是凸函数。更进一步，定义 $C_i\subset R^d$ 为 $g_i≤0$ 的凸区域。并且我们定义 $C_i$ 的边界 $\partial C_i:=\{x:g_i(x)=0\}$，作为 $f_i$ 的截断边界。那么，所有 $f_i$ 的截断边界 $\{∂C_i\}^N_{i=1}$，将区域 $R^d$ 划分为不相交的片 $A_1,...,A_M$，使得
 
-$$\begin{equation}\begin{aligned}&A_j\cap A_k=\empty,j\neq k\\
+$$\begin{equation}\begin{aligned}&A_j\cap A_k=\emptyset,j\neq k\\
 &\bigcup_{i=1}^MA_i=R^d\end{aligned}\tag{4}\end{equation}$$
 
 其中，
@@ -45,7 +45,6 @@ $$\begin{equation}A_j=\big(\bigcap_{k\in I_j}C_k\big)\cap\big(\bigcap_{l\notin I
 其中 $I_j$ 是 $\{ f_1,...,f_N \}$ 的指标集的一个子集，满足对任意的 $\boldsymbol x∈A_j$，若 $k∈I_j$，则 $g_k (\boldsymbol x)≤0$；若 $k\notin I_j$，则 $g_k (\boldsymbol x) > 0$。
 
 ![image-20240123172228898](assets/img/20240122/image-20240123172228898.png)
-
 _定义在 $R^2$ 上的3个凸函数 $f_1,f_2,f_3$ 对应的 $C_i$_
 
 ## 一般算法
@@ -56,7 +55,8 @@ $$\begin{equation}\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}=\
 
 当在 $A_j$ 范围内最小化 $\sum_{k∈I_j}f_k(x)$ 时，我们需要找到指标集合 $I_j$，并在 $\boldsymbol x ∈ A_j$ 的限制下。
 
-> 尽管目标函数 $\sum_{k∈I_j}f_k(x)$ 是凸函数的和（因此也是凸函数），但域 $A_j$ 可以是非凸集合。如图，除了 $A_3$ 之外，所有其他 $A_j$ 都是非凸集合。{: .prompt-warning }
+> 尽管目标函数 $\sum_{k∈I_j}f_k(x)$ 是凸函数的和（因此也是凸函数），但域 $A_j$ 可以是非凸集合。如图，除了 $A_3$ 之外，所有其他 $A_j$ 都是非凸集合。
+> {: .prompt-warning }
 
 解决这样的受限优化问题可能非常具有挑战性。幸运的是，$(7)$ 表明在最小化 $\sum_{k∈I_j}f_k(\boldsymbol x)$ 时忽略约束 $\boldsymbol x∈A_j$ 是安全的，因此我们只需要求解一系列无约束的凸优化问题，这要容易得多。
 
@@ -85,9 +85,9 @@ $$\begin{equation}\begin{aligned}&f\Leftrightarrow\sum_{k=1}^K\min\bigg(\frac{(s
 $$\begin{equation}\begin{aligned}&g\Leftrightarrow\sum_{k=1}^K\min\bigg(\frac{(s-s_k)^2}{\alpha_k^2},0\bigg)+\sum_{k=1}^K\bar{c}^2\\
 &\{g_i\}^N_{i=1}\Leftrightarrow\bigg\{\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\bigg\}_{k=1}^K\\
 &C_i=[s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}]\\
-&\part C_i=\big\{s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}\big\}_{k=1}^K\end{aligned}\tag{10}\end{equation}\\$$
+&\partial C_i=\big\{s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}\big\}_{k=1}^K\end{aligned}\tag{10}\end{equation}\\$$
 
-对 $(10)$ 中 $\part C_i$，使其沿实线顺序排列，将 $R$ 划分为 $2K+1$ 个片段 $\{A_j\}^{2K+1}_{j=1}$。同理，我们需要 $I_j$，$\{1,...,K\}$ 的一个子集，满足对任意的 $s∈A_j$，若 $k∈I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2≤0$；若 $k\notin I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2>0$。容易想到，对于小于最小边界的片段和大于最大边界的片段，对应的 $I_j$ 是平凡的（必为空集），因此，可 $\{A_j\}^{2K+1}_{j=1}$ 重新编号，即仅考虑除去除上述两片段之外的 $2K-1$ 个片段，得到  $\{A_j\}^{2K-1}_{j=1}$，其对应的 $I_j$ 分别为：$I_1,I_2,...,I_{2K-1}$。
+对 $(10)$ 中 $\partial C_i$，使其沿实线顺序排列，将 $R$ 划分为 $2K+1$ 个片段 $\{A_j\}^{2K+1}\_{j=1}$。同理，我们需要 $I_j$，$\{1,...,K\}$ 的一个子集，满足对任意的 $s∈A_j$，若 $k∈I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2≤0$；若 $k\notin I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2>0$。容易想到，对于小于最小边界的片段和大于最大边界的片段，对应的 $I_j$ 是平凡的（必为空集），因此，可 $\{A_j\}^{2K+1}\_{j=1}$ 重新编号，即仅考虑除去除上述两片段之外的 $2K-1$ 个片段，得到  $\{A_j\}^{2K-1}\_{j=1}$，其对应的 $I_j$ 分别为：$I_1,I_2,...,I\_{2K-1}$。
 
 那么，原本被 $(8)$ 表述的缩放估计问题，可被重新表述为，求解 $(11)$ 取得时所对应的 $s$：
 
@@ -105,4 +105,5 @@ $$\begin{equation}\min_j\min_{s}\sum_{k\in I_j}\bigg[\frac{(s-s_k)^2}{\alpha_k^2
 
 ![image-20240124012715812](assets/img/20240122/image-20240124012715812.png)
 
-> 至此，我们通过自适应投票法在多项式时间内精确求解了标量 TLS 问题，这对于缩放估计和平移分量估计都是有效的。甚至在 2D 点云配准问题中，由于旋转仅一个自由度，也能够使用此方法。该方法优点在于能够比较好得考虑点云测量噪声的影响，且允许我们对点云的噪声模型进行更精细的建模。{: .prompt-tip }
+> 至此，我们通过自适应投票法在多项式时间内精确求解了标量 TLS 问题，这对于缩放估计和平移分量估计都是有效的。甚至在 2D 点云配准问题中，由于旋转仅一个自由度，也能够使用此方法。该方法优点在于能够比较好得考虑点云测量噪声的影响，且允许我们对点云的噪声模型进行更精细的建模。
+> {: .prompt-tip }
