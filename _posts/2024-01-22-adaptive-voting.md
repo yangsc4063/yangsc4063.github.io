@@ -56,7 +56,7 @@ $$\begin{equation}\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}=\
 当在 $A_j$ 范围内最小化 $\sum_{k∈I_j}f_k(x)$ 时，我们需要找到指标集合 $I_j$，并在 $\boldsymbol x ∈ A_j$ 的限制下。
 
 > 尽管目标函数 $\sum_{k∈I_j}f_k(x)$ 是凸函数的和（因此也是凸函数），但域 $A_j$ 可以是非凸集合。如图，除了 $A_3$ 之外，所有其他 $A_j$ 都是非凸集合。
-> {: .prompt-warning }
+{: .prompt-warning }
 
 解决这样的受限优化问题可能非常具有挑战性。幸运的是，$(7)$ 表明在最小化 $\sum_{k∈I_j}f_k(\boldsymbol x)$ 时忽略约束 $\boldsymbol x∈A_j$ 是安全的，因此我们只需要求解一系列无约束的凸优化问题，这要容易得多。
 
@@ -106,4 +106,4 @@ $$\begin{equation}\min_j\min_{s}\sum_{k\in I_j}\bigg[\frac{(s-s_k)^2}{\alpha_k^2
 ![image-20240124012715812](assets/img/20240122/image-20240124012715812.png)
 
 > 至此，我们通过自适应投票法在多项式时间内精确求解了标量 TLS 问题，这对于缩放估计和平移分量估计都是有效的。甚至在 2D 点云配准问题中，由于旋转仅一个自由度，也能够使用此方法。该方法优点在于能够比较好得考虑点云测量噪声的影响，且允许我们对点云的噪声模型进行更精细的建模。
-> {: .prompt-tip }
+{: .prompt-tip }
