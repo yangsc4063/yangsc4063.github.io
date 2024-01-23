@@ -93,7 +93,7 @@ $$\begin{equation}\begin{aligned}&g\Leftrightarrow\sum_{k=1}^K\min\bigg(\frac{(s
 
 $$\begin{equation}\min_j\min_{s}\sum_{k\in I_j}\bigg[\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\bigg]\tag{11}\end{equation}$$
 
-其中，$\min_{s}\sum_{k\in I_j}\big[\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\big]$ 容易求解，$\hat{s}_j=\big(\sum_{k\in I_j}\frac{1}{\alpha_j^2}\big)^{-1}\sum_{k\in I_j}\frac{s_k}{\alpha_j^2}$，我们只需从中枚举出最小的作为 $\hat s$ 即可。
+其中，$\min_{s}\sum\_{k\in I_j}\big[\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\big]$ 容易求解，$\hat{s}_j=\big(\sum\_{k\in I_j}\frac{1}{\alpha_j^2}\big)^{-1}\sum\_{k\in I_j}\frac{s_k}{\alpha_j^2}$，我们只需从中枚举出最小的作为 $\hat s$ 即可。
 
 ### 投票法求解
 
