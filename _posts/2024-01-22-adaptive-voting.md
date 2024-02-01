@@ -105,7 +105,7 @@ $$\begin{equation}\begin{aligned}&g\Leftrightarrow\sum_{k=1}^K\min\bigg(\frac{(s
 &C_i=[s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}]\\
 &\partial C_i=\big\{s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}\big\}_{k=1}^K\end{aligned}\tag{12}\end{equation}\\$$
 
-对 $(12)$ 中 $\partial C_i$，使其沿实线顺序排列，将 $R$ 划分为 $2K+1$ 个片段 ${A_j}^{2K+1}\_{j=1}$。同理，我们需要 $I_j$，$\{1,...,K\}$ 的一个子集，满足对任意的 $s∈A_j$，若 $k∈I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2≤0$；若 $k\notin I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2>0$。容易想到，对于小于最小边界的片段和大于最大边界的片段，对应的 $I_j$ 是平凡的（必为空集），因此，可 ${A_j}^{2K+1}\_{j=1}$ 重新编号，即仅考虑除去除上述两片段之外的 $2K-1$ 个片段，得到  ${A_j}^{2K-1}\_{j=1}$，其对应的 $I_j$ 分别为：$I_1,I_2,...,I\_{2K-1}$。
+对 $(12)$ 中 $\partial C_i$，使其沿实线顺序排列，将 $R$ 划分为 $2K+1$ 个片段 $\lbrace A_j\rbrace^{2K+1}\_{j=1}$。同理，我们需要 $I_j$，$\{1,...,K\}$ 的一个子集，满足对任意的 $s∈A_j$，若 $k∈I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2≤0$；若 $k\notin I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2>0$。容易想到，对于小于最小边界的片段和大于最大边界的片段，对应的 $I_j$ 是平凡的（必为空集），因此，可 $\lbrace A_j\rbrace^{2K+1}\_{j=1}$ 重新编号，即仅考虑除去除上述两片段之外的 $2K-1$ 个片段，得到  $\lbrace A_j\rbrace^{2K-1}\_{j=1}$，其对应的 $I_j$ 分别为：$I_1,I_2,...,I\_{2K-1}$。
 
 那么，原本被 $(10)$ 表述的缩放估计问题，可被重新表述为，求解 $(13)$ 取得时所对应的 $s$：
 
