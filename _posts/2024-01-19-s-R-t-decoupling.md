@@ -67,6 +67,8 @@ $$\begin{equation}s_{ij}=s+o_{ij}^s+\varepsilon_{ij}^s\tag{7}\end{equation}$$
 | 噪声界 |          $\|\boldsymbol \varepsilon_i\|\leq\beta_i$          | $\|\boldsymbol\varepsilon_{ij}\|\leq\delta_{ij}=\beta_i+\beta_j$ | $\|\varepsilon_{ij}^s\|\leqα_{ij}=\delta_{ij}/\|\boldsymbol p_{ij}\|$ |
 |  数量  |                             $N$                              |                   $K\leq\frac{N(N-1)}{2}$                    |                             $K$                              |
 
+
+
 ## 缩放、旋转和平移级联求解
 
 ### 缩放估计

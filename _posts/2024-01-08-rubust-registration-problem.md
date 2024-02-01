@@ -26,6 +26,8 @@ $$\begin{equation}\min_{s>0,\boldsymbol R\in SO(3),\boldsymbol t\in R^3}\sum_{i=
 
 在实际应用中，由于点匹配不正确，很大一部分对应是离群点。尽管闭式解形式优美，但它们对异常值并不鲁棒，即使单独一个"坏"的异常值就可能对估计的正确性造成负面影响。因此，我们提出了一种能够容忍极端数量离群对应的截断最小二乘配准公式。
 
+
+
 ## 截断最小二乘的点云配准
 
 从高斯噪声模型出发，假设噪声是未知但有界的。形式上，我们假设内点噪声 $\boldsymbol \varepsilon_i$ 满足 $‖\boldsymbol \varepsilon_i‖\leq\beta_i$，其中 $\beta_i$ 是一个给定的边界。

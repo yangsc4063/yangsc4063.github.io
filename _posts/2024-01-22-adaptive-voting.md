@@ -47,6 +47,8 @@ $$\begin{equation}A_j=\big(\bigcap_{k\in I_j}C_k\big)\cap\big(\bigcap_{l\notin I
 ![image-20240123172228898](assets/img/20240122/image-20240123172228898.png)
 _定义在 $R^2$ 上的3个凸函数 $f_1,f_2,f_3$ 对应的 $C_i$_
 
+
+
 ## 一般算法
 
 我们的目标是找到分区中每个区域 $A_j$ 上的局部极小值，并将所有局部极小值中的最小值作为全局解，即
@@ -55,12 +57,28 @@ $$\begin{equation}\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}=\
 
 当在 $A_j$ 范围内最小化 $\sum_{k∈I_j}f_k(x)$ 时，我们需要找到指标集合 $I_j$，并在 $\boldsymbol x ∈ A_j$ 的限制下。
 
-> 尽管目标函数 $\sum_{k∈I_j}f_k(x)$ 是凸函数的和（因此也是凸函数），但域 $A_j$ 可以是非凸集合。如图，除了 $A_3$ 之外，所有其他 $A_j$ 都是非凸集合。
+> 尽管目标函数 $\sum_{k∈I_j}g_k(x)$ 是凸函数的和（因此也是凸函数），但域 $A_j$ 可以是非凸集合。如图，除了 $A_3$ 之外，所有其他 $A_j$ 都是非凸集合。
 {: .prompt-warning }
 
-解决这样的受限优化问题可能非常具有挑战性。幸运的是，$(7)$ 表明在最小化 $\sum_{k∈I_j}f_k(\boldsymbol x)$ 时忽略约束 $\boldsymbol x∈A_j$ 是安全的，因此我们只需要求解一系列无约束的凸优化问题，这要容易得多。
+解决这样的受限优化问题可能非常具有挑战性。不过，我们注意到，
 
-$$\begin{equation}\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}=\min_j\min_{\boldsymbol x}\sum_{k\in I_j}g_k(\boldsymbol x)\tag{7}\end{equation}$$
+一方面，
+
+$$\begin{equation}\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}=\min_j\min_{\boldsymbol x\in A_j}\sum_{k\in I_j}g_k(\boldsymbol x)\geq\min_j\min_{\boldsymbol x}\sum_{k\in I_j}g_k(\boldsymbol x)\tag{7}\end{equation}$$​
+
+另一方面，
+
+$$\begin{equation}\begin{aligned}\min_j\min_{\boldsymbol x}\sum_{k\in I_j}g_k(\boldsymbol x)&\geq\min_j\min_{\boldsymbol x}\sum_{k\in I_j}\min\{g_k(\boldsymbol x),0\}\\
+&\geq\min_j\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_k(\boldsymbol x),0\}\\
+&=\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}\end{aligned}\tag{8}\end{equation}$$
+
+综合 $(7)$ 和 $(8)$ 可得，
+
+$$\begin{equation}\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}=\min_j\min_{\boldsymbol x}\sum_{k\in I_j}g_k(\boldsymbol x)\tag{9}\end{equation}$$
+
+幸运的是，$(9)$ 表明在最小化 $\sum_{k∈I_j}g_k(\boldsymbol x)$ 时忽略约束 $\boldsymbol x∈A_j$ 是安全的，因此我们只需要求解一系列无约束的凸优化问题，这要容易得多。
+
+
 
 ## 截断最小二乘优化实现
 
@@ -74,24 +92,24 @@ $$\begin{equation}\min_{\boldsymbol x}\sum_{i=1}^N\min\{g_i(\boldsymbol x),0\}=\
 
 对于缩放估计，
 
-$$\begin{equation}\hat s=\arg\min_s\sum_{k=1}^K\min\bigg(\frac{(s-s_k)^2}{\alpha_k^2},\bar{c}^2\bigg)\tag{8}\end{equation}$$
+$$\begin{equation}\hat s=\arg\min_s\sum_{k=1}^K\min\bigg(\frac{(s-s_k)^2}{\alpha_k^2},\bar{c}^2\bigg)\tag{10}\end{equation}$$
 
 $$\begin{equation}\begin{aligned}&f\Leftrightarrow\sum_{k=1}^K\min\bigg(\frac{(s-s_k)^2}{\alpha_k^2},\bar{c}^2\bigg)\\
 &\{f_i\}^N_{i=1}\Leftrightarrow\bigg\{\frac{(s-s_k)^2}{\alpha_k^2}\bigg\}_{k=1}^K\\
-&d=1\end{aligned}\tag{9}\end{equation}$$
+&d=1\end{aligned}\tag{11}\end{equation}$$
 
 于是，
 
 $$\begin{equation}\begin{aligned}&g\Leftrightarrow\sum_{k=1}^K\min\bigg(\frac{(s-s_k)^2}{\alpha_k^2},0\bigg)+\sum_{k=1}^K\bar{c}^2\\
 &\{g_i\}^N_{i=1}\Leftrightarrow\bigg\{\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\bigg\}_{k=1}^K\\
 &C_i=[s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}]\\
-&\partial C_i=\big\{s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}\big\}_{k=1}^K\end{aligned}\tag{10}\end{equation}\\$$
+&\partial C_i=\big\{s_k-\alpha_k\bar{c},s_k+\alpha_k\bar{c}\big\}_{k=1}^K\end{aligned}\tag{12}\end{equation}\\$$
 
-对 $(10)$ 中 $\partial C_i$，使其沿实线顺序排列，将 $R$ 划分为 $2K+1$ 个片段 $\{A_j\}^{2K+1}\_{j=1}$。同理，我们需要 $I_j$，$\{1,...,K\}$ 的一个子集，满足对任意的 $s∈A_j$，若 $k∈I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2≤0$；若 $k\notin I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2>0$。容易想到，对于小于最小边界的片段和大于最大边界的片段，对应的 $I_j$ 是平凡的（必为空集），因此，可 $\{A_j\}^{2K+1}\_{j=1}$ 重新编号，即仅考虑除去除上述两片段之外的 $2K-1$ 个片段，得到  $\{A_j\}^{2K-1}\_{j=1}$，其对应的 $I_j$ 分别为：$I_1,I_2,...,I\_{2K-1}$。
+对 $(12)$ 中 $\partial C_i$，使其沿实线顺序排列，将 $R$ 划分为 $2K+1$ 个片段 $\{A_j\}^{2K+1}\_{j=1}$。同理，我们需要 $I_j$，$\{1,...,K\}$ 的一个子集，满足对任意的 $s∈A_j$，若 $k∈I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2≤0$；若 $k\notin I_j$，则 $(s-s_k)^2-\alpha_k^2\bar{c}^2>0$。容易想到，对于小于最小边界的片段和大于最大边界的片段，对应的 $I_j$ 是平凡的（必为空集），因此，可 $\{A_j\}^{2K+1}\_{j=1}$ 重新编号，即仅考虑除去除上述两片段之外的 $2K-1$ 个片段，得到  $\{A_j\}^{2K-1}\_{j=1}$，其对应的 $I_j$ 分别为：$I_1,I_2,...,I\_{2K-1}$。
 
-那么，原本被 $(8)$ 表述的缩放估计问题，可被重新表述为，求解 $(11)$ 取得时所对应的 $s$：
+那么，原本被 $(8)$ 表述的缩放估计问题，可被重新表述为，求解 $(13)$ 取得时所对应的 $s$：
 
-$$\begin{equation}\min_j\min_{s}\sum_{k\in I_j}\bigg[\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\bigg]\tag{11}\end{equation}$$
+$$\begin{equation}\min_j\min_{s}\sum_{k\in I_j}\bigg[\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\bigg]\tag{13}\end{equation}$$
 
 其中，$\min_{s}\sum\_{k\in I_j}\big[\frac{(s-s_k)^2}{\alpha_k^2}-\bar{c}^2\big]$ 容易求解，$\hat{s}_j=\big(\sum\_{k\in I_j}\frac{1}{\alpha_j^2}\big)^{-1}\sum\_{k\in I_j}\frac{s_k}{\alpha_j^2}$，我们只需从中枚举出最小的作为 $\hat s$ 即可。
 
