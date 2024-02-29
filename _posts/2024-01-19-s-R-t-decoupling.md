@@ -10,7 +10,7 @@ math: true
 
 > 本文是对论文《TEASER: Fast and Certifiable Point Cloud Registration》中所提出的**缩放、旋转和平移解耦的点云配准**的梳理。
 
-在鲁棒点云配准问题中，给定两个 3D 点云 $\boldsymbol P=\lbrace\boldsymbol p_i\rbrace\_{i=1}^N$ 和 $\boldsymbol Q=\lbrace\boldsymbol q_i\rbrace\_{i=1}^N$，其中 $\boldsymbol p_i,\boldsymbol q_i\in R^3$。考虑基于对应的模型，即假设给定的对应 $(\boldsymbol p_i,\boldsymbol q_i),i=1,...,N$服从以下模型：
+在鲁棒点云配准问题中，给定两个 3D 点云 $\boldsymbol P=\lbrace\boldsymbol p_i\rbrace\_{i=1}^N$ 和 $\boldsymbol Q=\lbrace\boldsymbol q_i\rbrace\_{i=1}^N$，其中 $\boldsymbol p_i,\boldsymbol q_i\in R^3$。考虑基于对应的模型，即假设给定的对应 $(\boldsymbol p_i,\boldsymbol q_i),i=1,...,N$ 服从：
 
 $$\begin{equation}\boldsymbol q_i=s^\circ\boldsymbol R^\circ\boldsymbol p_i+\boldsymbol t^\circ+\boldsymbol o_i+\boldsymbol \varepsilon_i\tag{1}\end{equation}$$
 
