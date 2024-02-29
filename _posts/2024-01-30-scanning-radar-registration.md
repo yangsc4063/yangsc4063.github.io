@@ -35,7 +35,7 @@ _Mulran 数据集所提供的单帧扫描毫米波雷达数据（极坐标表示
 
 与激光雷达测量的各向同性（即它们沿轴的方差可能相等）不确定性不同，扫描毫米波雷达测量具有各向异性特征，也就是说，沿方位角方向的每个点的不确定性相对较大，而沿径向方向的不确定性较小。为了建模雷达特征点的不确定性，测量噪声被表示为<u>沿着扫描毫米波雷达信号发射的方向的径向不确定性</u>和<u>垂直于径向方向的方位不确定性的叠加</u>。因此，不确定性呈现为香蕉形状（如下图所示）。
 
-![uncertainty_modeling_1](/assets/img/20240130/uncertainty_modeling_1.png)
+![uncertainty_modeling_1](/assets/img/20240130/uncertainty_modeling_1.png){: width="972" height="589" }
 
 _扫描毫米波雷达雷达特征点各向异性特征的可视化描述_
 
@@ -102,7 +102,7 @@ $$\begin{equation}C_{\boldsymbol p_k}=\rho_k^2\begin{bmatrix}\sin^2\theta_k&-\si
 
 对于旋转估计，我们可以通过计算 $\boldsymbol p_{ij}=\boldsymbol p_j-\boldsymbol p_i$ 和 $\boldsymbol q_{ij}=\boldsymbol q_j-\boldsymbol q_i$ 来获得平移不变度量（TIM），而 TIM 近似服从 $\boldsymbol p_{ij}\sim N(\boldsymbol p_j-\boldsymbol p_i,C_{\boldsymbol p_j}+C_{\boldsymbol p_i})$​ 的正态分布。
 
-![uncertainty_modeling_2](/assets/img/20240130/uncertainty_modeling_2.png)
+![uncertainty_modeling_2](/assets/img/20240130/uncertainty_modeling_2.png){: width="972" height="589" }
 
 由《缩放、旋转和平移解耦的点云配准》可知，两帧之间平移不变度量（TIM）的夹角即为两帧之间的相对旋转，对该夹角 $\theta_{ij}=\arctan\bigg(\frac{^{(2)}q_{ij}}{^{(1)}q_{ij}}\bigg)-\arctan\bigg(\frac{^{(2)}p_{ij}}{^{(1)}p_{ij}}\bigg)$ 做截断最小二乘估计并应用自适应投票方法，其中 $^{(l)}(\cdot)$ 表示该向量的第 $l$ 个元素，$l=1,2$​。然而，要使用自适应投票法从若干平移不变度量（TIM）的测量量中估计真值，还需已知测量量的不确定性。两帧之间平移不变度量（TIM）的夹角 $\theta$ 的表达式是非线性的， TIM 近似服从的正态分布经过该式后讲难以被解析地描述。为此，可以考虑近似，将平移不变量度量的协方差矩阵投影至其切向（角度方向），以此作为角度不确定性的定性描述。
 
@@ -145,3 +145,4 @@ $$\begin{equation}^{(l)}t_i^\circ{=}^{(l)}\{\boldsymbol q_i^\circ-\hat{\boldsymb
 $$\begin{equation}\delta^{(l)}t_i\sim N(0{,}^{(l)}\sigma_i^2),\ l=1,2,\tag{15}\end{equation}$$
 
 得到如上带不确定性的相对平移测量量，即可使用自适应投票法对平移进行鲁棒估计。
+
